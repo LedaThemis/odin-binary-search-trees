@@ -120,3 +120,23 @@ test('should return null if node is not found', () => {
 
   expect(foundNode).toBe(null);
 });
+
+test('should traverse tree and return list of nodes if no function is provided', () => {
+  const tree = Tree([1, 2, 3]);
+
+  const levelOrder = tree.levelOrder();
+
+  expect(levelOrder[0].data).toBe(2);
+  expect(levelOrder[1].data).toBe(1);
+  expect(levelOrder[2].data).toBe(3);
+});
+
+test('should traverse tree and return list of nodes with function applied if function is provided', () => {
+  const tree = Tree([1, 2, 3]);
+
+  const levelOrder = tree.levelOrder((node) => node.data);
+
+  expect(levelOrder[0]).toBe(2);
+  expect(levelOrder[1]).toBe(1);
+  expect(levelOrder[2]).toBe(3);
+});

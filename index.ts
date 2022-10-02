@@ -123,6 +123,35 @@ export function Tree(array: number[]) {
     }
   };
 
+  const levelOrderTraversal = (node: TreeNodeType<number> | null) => {
+    const queue: TreeNodeType<number>[] = [];
+    const result: TreeNodeType<number>[] = [];
+
+    if (node === null) {
+      return queue;
+    }
+
+    queue.push(node);
+
+    while (queue.length !== 0) {
+      let current = queue[0];
+
+      result.push(current);
+
+      if (current.left !== null) {
+        queue.push(current.left);
+      }
+
+      if (current.right !== null) {
+        queue.push(current.right);
+      }
+
+      queue.shift();
+    }
+
+    return result;
+  };
+
   return {
     get root() {
       return root;
@@ -136,6 +165,15 @@ export function Tree(array: number[]) {
     },
     find: (value: number) => {
       return findValue(root, value);
+    },
+    levelOrder: (fn?: (node: TreeNodeType<number>) => any) => {
+      const result = levelOrderTraversal(root);
+
+      if (fn) {
+        return result.map(fn);
+      } else {
+        return result;
+      }
     },
   };
 }
