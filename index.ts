@@ -109,6 +109,20 @@ export function Tree(array: number[]) {
     return node;
   };
 
+  const findValue = (node: TreeNodeType<number> | null, value: number): TreeNodeType<number> | null => {
+    if (node === null) {
+      return null;
+    }
+
+    if (node.data === value) {
+      return node;
+    } else if (value < node.data) {
+      return findValue(node.left, value);
+    } else {
+      return findValue(node.right, value);
+    }
+  };
+
   return {
     get root() {
       return root;
@@ -119,6 +133,9 @@ export function Tree(array: number[]) {
     delete: (value: number) => {
       // Update root, necessary when deleting root node
       root = Object.assign({}, deleteValue(root, value));
+    },
+    find: (value: number) => {
+      return findValue(root, value);
     },
   };
 }

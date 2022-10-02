@@ -83,3 +83,40 @@ test('should delete node if it has two children and inorder successor has childr
   expect(tree.root.left?.data).toBe(1);
   expect(tree.root.right?.data).toBe(4);
 });
+
+test('should return found node', () => {
+  const tree = Tree([1, 2, 3]);
+
+  const nodeValue = 3;
+
+  const foundNode = tree.find(nodeValue);
+
+  expect(foundNode?.data).toBe(nodeValue);
+  expect(foundNode?.left).toBe(null);
+  expect(foundNode?.right).toBe(null);
+});
+
+test('should return found node with left and right nodes', () => {
+  const tree = Tree([1, 3, 5]);
+
+  tree.insert(4);
+  tree.insert(6);
+
+  const nodeValue = 5;
+
+  const foundNode = tree.find(nodeValue);
+
+  expect(foundNode?.data).toBe(nodeValue);
+  expect(foundNode?.left?.data).toBe(4);
+  expect(foundNode?.right?.data).toBe(6);
+});
+
+test('should return null if node is not found', () => {
+  const tree = Tree([1, 2, 3]);
+
+  const nodeValue = 5;
+
+  const foundNode = tree.find(nodeValue);
+
+  expect(foundNode).toBe(null);
+});
