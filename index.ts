@@ -38,7 +38,7 @@ export function Tree(array: number[]) {
     throw new Error('Array should not be empty.');
   }
 
-  const root = buildTree(array);
+  let root = buildTree(array);
 
   const insert = (node: TreeNodeType<number> | null, value: number) => {
     if (node === null) {
@@ -53,12 +53,72 @@ export function Tree(array: number[]) {
     return node;
   };
 
+  const isLeafNode = (node: TreeNodeType<number> | null) => node?.left === null && node?.right === null;
+
+  const hasLeftNode = (node: TreeNodeType<number> | null) => node?.left !== null;
+  const hasRightNode = (node: TreeNodeType<number> | null) => node?.right !== null;
+
+  const findInOrderSuccessor = (node: TreeNodeType<number>): TreeNodeType<number> => {
+    if (node.left !== null) {
+      return findInOrderSuccessor(node.left);
+    } else {
+      return node;
+    }
+  };
+
+  const deleteNode = (node: TreeNodeType<number>) => {
+    if (isLeafNode(node)) {
+      return null;
+    } else if (hasLeftNode(node) && isLeafNode(node.left) && !hasRightNode(node)) {
+      // Left node is leaf and is the only node
+      return node.left;
+    } else if (hasRightNode(node) && isLeafNode(node.right) && !hasLeftNode(node)) {
+      // Right node is leaf and is the only node
+      return node.right;
+    } else {
+      // Node has two children nodes
+
+      // Find inorder successor
+      const inOrderSuccessor = findInOrderSuccessor(node.right as TreeNodeType<number>);
+
+      // Recursively delete it, so that its children will be attached to correct place
+      deleteValue(root, inOrderSuccessor.data);
+
+      // Replace node with new node that has in order successor data
+      const newNode = TreeNode(inOrderSuccessor.data);
+      newNode.left = node.left;
+      newNode.right = node.right;
+
+      return newNode;
+    }
+  };
+
+  const deleteValue = (node: TreeNodeType<number> | null, value: number) => {
+    if (node === null) {
+      return null;
+    }
+
+    if (node.data === value) {
+      return deleteNode(node);
+    } else if (value < node.data) {
+      node.left = deleteValue(node.left, value);
+    } else if (value > node.data) {
+      node.right = deleteValue(node.right, value);
+    }
+
+    return node;
+  };
+
   return {
     get root() {
       return root;
     },
     insert: (value: number) => {
       insert(root, value);
+    },
+    delete: (value: number) => {
+      // Update root, necessary when deleting root node
+      root = Object.assign({}, deleteValue(root, value));
     },
   };
 }
@@ -96,7 +156,3 @@ export function prettyPrint<T>(node: TreeNodeType<T>, prefix = '', isLeft = true
     prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
   }
 }
-
-const tree = Tree([1, 2, 3]);
-
-tree.insert(0);
