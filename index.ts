@@ -152,6 +152,22 @@ export function Tree(array: number[]) {
     return result;
   };
 
+  const preorderTraversal = (node: TreeNodeType<number> | null, fn?: (node: TreeNodeType<number>) => any) => {
+    const result: any[] = [];
+
+    const inner = (node: TreeNodeType<number> | null) => {
+      if (node === null) return;
+
+      result.push(fn ? fn(node) : node);
+      inner(node.left);
+      inner(node.right);
+    };
+
+    inner(node);
+
+    return result;
+  };
+
   return {
     get root() {
       return root;
@@ -174,6 +190,9 @@ export function Tree(array: number[]) {
       } else {
         return result;
       }
+    },
+    preorder: (fn?: (node: TreeNodeType<number>) => any) => {
+      return preorderTraversal(root, fn);
     },
   };
 }
@@ -211,3 +230,7 @@ export function prettyPrint<T>(node: TreeNodeType<T>, prefix = '', isLeft = true
     prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
   }
 }
+
+const tree = Tree([1, 2, 3, 4, 5, 6, 7]);
+
+prettyPrint(tree.root);
