@@ -121,7 +121,7 @@ test('should return null if node is not found', () => {
   expect(foundNode).toBe(null);
 });
 
-test('should traverse tree and return list of nodes if no function is provided', () => {
+test('should traverse tree and return list of nodes if no function is provided (level order)', () => {
   const tree = Tree([1, 2, 3, 4, 5, 6, 7]);
 
   const levelOrder = tree.levelOrder();
@@ -129,7 +129,7 @@ test('should traverse tree and return list of nodes if no function is provided',
   expect(levelOrder.map((n) => n.data)).toStrictEqual([4, 2, 6, 1, 3, 5, 7]);
 });
 
-test('should traverse tree and return list of nodes with function applied if function is provided', () => {
+test('should traverse tree and return list of nodes with function applied if function is provided (level order)', () => {
   const tree = Tree([1, 2, 3, 4, 5, 6, 7]);
 
   const levelOrder = tree.levelOrder((n) => n.data);
@@ -137,7 +137,7 @@ test('should traverse tree and return list of nodes with function applied if fun
   expect(levelOrder).toStrictEqual([4, 2, 6, 1, 3, 5, 7]);
 });
 
-test('should traverse tree and return list of nodes if no function is provided', () => {
+test('should traverse tree and return list of nodes if no function is provided (preorder)', () => {
   const tree = Tree([1, 2, 3, 4, 5, 6, 7]);
 
   const preorder = tree.preorder();
@@ -145,10 +145,26 @@ test('should traverse tree and return list of nodes if no function is provided',
   expect(preorder.map((n) => n.data)).toStrictEqual([4, 2, 1, 3, 6, 5, 7]);
 });
 
-test('should traverse tree and return list of nodes with function applied if function is provided', () => {
+test('should traverse tree and return list of nodes with function applied if function is provided (preorder)', () => {
   const tree = Tree([1, 2, 3, 4, 5, 6, 7]);
 
   const preorder = tree.preorder((n) => n.data);
 
   expect(preorder).toStrictEqual([4, 2, 1, 3, 6, 5, 7]);
+});
+
+test('should traverse tree and return list of nodes if no function is provided (inorder)', () => {
+  const tree = Tree([1, 2, 3, 4, 5, 6, 7]);
+
+  const preorder = tree.inorder();
+
+  expect(preorder.map((n) => n.data)).toStrictEqual([1, 2, 3, 4, 5, 6, 7]);
+});
+
+test('should traverse tree and return list of nodes with function applied if function is provided (inorder)', () => {
+  const tree = Tree([1, 2, 3, 4, 5, 6, 7]);
+
+  const preorder = tree.inorder((n) => n.data);
+
+  expect(preorder).toStrictEqual([1, 2, 3, 4, 5, 6, 7]);
 });
