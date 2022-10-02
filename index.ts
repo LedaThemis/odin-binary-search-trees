@@ -184,6 +184,22 @@ export function Tree(array: number[]) {
     return result;
   };
 
+  const postorderTraversal = (node: TreeNodeType<number> | null, fn?: (node: TreeNodeType<number>) => any) => {
+    const result: any[] = [];
+
+    const inner = (node: TreeNodeType<number> | null) => {
+      if (node === null) return;
+
+      inner(node.left);
+      inner(node.right);
+      result.push(fn ? fn(node) : node);
+    };
+
+    inner(node);
+
+    return result;
+  };
+
   return {
     get root() {
       return root;
@@ -212,6 +228,9 @@ export function Tree(array: number[]) {
     },
     inorder: (fn?: (node: TreeNodeType<number>) => any) => {
       return inorderTraversal(root, fn);
+    },
+    postorder: (fn?: (node: TreeNodeType<number>) => any) => {
+      return postorderTraversal(root, fn);
     },
   };
 }
