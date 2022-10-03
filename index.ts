@@ -200,6 +200,17 @@ export function Tree(array: number[]) {
     return result;
   };
 
+  const getNodeHeight = (node: TreeNodeType<number> | null): number => {
+    if (node === null) {
+      return 0;
+    } else {
+      const leftHeight = 1 + getNodeHeight(node.left);
+      const rightHeight = 1 + getNodeHeight(node.right);
+
+      return Math.max(leftHeight, rightHeight);
+    }
+  };
+
   return {
     get root() {
       return root;
@@ -231,6 +242,9 @@ export function Tree(array: number[]) {
     },
     postorder: (fn?: (node: TreeNodeType<number>) => any) => {
       return postorderTraversal(root, fn);
+    },
+    height: (node: TreeNodeType<number> | null) => {
+      return getNodeHeight(node);
     },
   };
 }

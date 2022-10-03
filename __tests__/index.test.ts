@@ -184,3 +184,37 @@ test('should traverse tree and return list of nodes with function applied if fun
 
   expect(preorder).toStrictEqual([1, 3, 2, 5, 7, 6, 4]);
 });
+
+test('should return correct tree height is symmetric', () => {
+  const tree = Tree([1, 2, 3]);
+
+  const height = tree.height(tree.root);
+
+  expect(height).toBe(2);
+});
+
+test('should return correct tree height of left nodes', () => {
+  const tree = Tree([1, 2, 3]);
+
+  const height = tree.height(tree.root.left);
+
+  expect(height).toBe(1);
+});
+
+test('should return correct tree height of right nodes', () => {
+  const tree = Tree([1, 2, 3]);
+
+  const height = tree.height(tree.root.right);
+
+  expect(height).toBe(1);
+});
+
+test('should return correct tree height if tree is not symmetric', () => {
+  const tree = Tree([1, 2, 3]);
+
+  tree.insert(0);
+
+  const height = tree.height(tree.root);
+
+  expect(height).toBe(3);
+});
