@@ -1,4 +1,4 @@
-import { prettyPrint, Tree, TreeNode } from '..';
+import { Tree, TreeNode } from '..';
 
 test('should render tree from provided array (two-levels)', () => {
   const tree = Tree([1, 2, 3]);

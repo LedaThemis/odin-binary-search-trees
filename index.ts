@@ -309,7 +309,7 @@ function buildTree(array: number[]): TreeNodeType<number> {
   return constructTree(array, 0, array.length)!;
 }
 
-export function prettyPrint<T>(node: TreeNodeType<T>, prefix = '', isLeft = true) {
+function prettyPrint<T>(node: TreeNodeType<T>, prefix = '', isLeft = true) {
   if (node.right !== null) {
     prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
   }
@@ -318,3 +318,70 @@ export function prettyPrint<T>(node: TreeNodeType<T>, prefix = '', isLeft = true
     prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
   }
 }
+
+const generateNumArray = (maxLength = 1000) => {
+  const length = Math.random() * maxLength + 1; // Between 1 and maxLength + 1
+
+  const arr = [];
+
+  for (let i = 0; i < length; i++) {
+    arr.push(i + 1);
+  }
+
+  return arr;
+};
+
+const main = () => {
+  const tree = Tree(generateNumArray());
+
+  console.log('Balanced:', tree.isBalanced());
+
+  console.log('Traversal:');
+
+  console.log(
+    ' Level Order:',
+    tree.levelOrder((n) => n.data)
+  );
+  console.log(
+    ' Preorder:',
+    tree.preorder((n) => n.data)
+  );
+  console.log(
+    ' Inorder:',
+    tree.inorder((n) => n.data)
+  );
+  console.log(
+    ' Postorder:',
+    tree.postorder((n) => n.data)
+  );
+
+  generateNumArray().forEach((v) => tree.insert(v));
+
+  console.log('Balanced:', tree.isBalanced());
+
+  console.log('Rebalancing...');
+  tree.rebalance();
+
+  console.log('Balanced:', tree.isBalanced());
+
+  console.log('Traversal:');
+
+  console.log(
+    ' Level Order:',
+    tree.levelOrder((n) => n.data)
+  );
+  console.log(
+    ' Preorder:',
+    tree.preorder((n) => n.data)
+  );
+  console.log(
+    ' Inorder:',
+    tree.inorder((n) => n.data)
+  );
+  console.log(
+    ' Postorder:',
+    tree.postorder((n) => n.data)
+  );
+};
+
+main();
