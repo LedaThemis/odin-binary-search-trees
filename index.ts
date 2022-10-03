@@ -232,8 +232,6 @@ export function Tree(array: number[]) {
       const leftHeight = getNodeHeight(node.left);
       const rightHeight = getNodeHeight(node.right);
 
-      console.log({ rightHeight, leftHeight });
-
       return Math.abs(rightHeight - leftHeight) <= 1 && isTreeBalanced(node.left) && isTreeBalanced(node.right);
     }
   };
@@ -278,6 +276,11 @@ export function Tree(array: number[]) {
     },
     isBalanced: () => {
       return isTreeBalanced(root);
+    },
+    rebalance: () => {
+      if (!isTreeBalanced(root)) {
+        root = buildTree(inorderTraversal(root, (n) => n.data));
+      }
     },
   };
 }

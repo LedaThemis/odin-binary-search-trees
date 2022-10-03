@@ -270,3 +270,31 @@ test('should return false if child nodes of tree are not balanced', () => {
 
   expect(tree.isBalanced()).toBe(false);
 });
+
+test('should rebalance tree', () => {
+  const tree = Tree([1, 3, 5]);
+
+  tree.insert(0);
+  tree.insert(-1);
+
+  tree.rebalance();
+
+  expect(tree.root.left?.left?.data).toBe(-1);
+  expect(tree.root.left?.data).toBe(0);
+  expect(tree.root.data).toBe(1);
+  expect(tree.root.right?.data).toBe(5);
+  expect(tree.root.right?.left?.data).toBe(3);
+});
+
+test('should rebalance tree only if necessary', () => {
+  const tree = Tree([1, 3, 5]);
+
+  tree.insert(0);
+  tree.insert(2);
+
+  tree.rebalance();
+
+  // This can be rebalanced by moving 2 to root
+
+  expect(tree.root.data).toBe(3);
+});
