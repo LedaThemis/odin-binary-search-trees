@@ -7,7 +7,7 @@ interface TreeNodeType<T> {
 /**
  * Node factory function
  */
-function TreeNode<T>(data: T) {
+export function TreeNode<T>(data: T) {
   let left: TreeNodeType<T>['left'] = null;
   let right: TreeNodeType<T>['right'] = null;
 
@@ -211,6 +211,20 @@ export function Tree(array: number[]) {
     }
   };
 
+  const getNodeDepth = (root: TreeNodeType<number> | null, node: TreeNodeType<number>): number => {
+    if (root === null) {
+      throw new Error('Node does not exist.');
+    }
+
+    if (node.data === root.data) {
+      return 0;
+    } else if (node.data < root.data) {
+      return 1 + getNodeDepth(root.left, node);
+    } else {
+      return 1 + getNodeDepth(root.right, node);
+    }
+  };
+
   return {
     get root() {
       return root;
@@ -245,6 +259,9 @@ export function Tree(array: number[]) {
     },
     height: (node: TreeNodeType<number> | null) => {
       return getNodeHeight(node);
+    },
+    depth: (node: TreeNodeType<number>) => {
+      return getNodeDepth(root, node);
     },
   };
 }

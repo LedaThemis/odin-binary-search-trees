@@ -1,4 +1,4 @@
-import { prettyPrint, Tree } from '..';
+import { prettyPrint, Tree, TreeNode } from '..';
 
 test('should render tree from provided array (two-levels)', () => {
   const tree = Tree([1, 2, 3]);
@@ -217,4 +217,30 @@ test('should return correct tree height if tree is not symmetric', () => {
   const height = tree.height(tree.root);
 
   expect(height).toBe(3);
+});
+
+test('should return depth as zero if root is given', () => {
+  const tree = Tree([1, 2, 3]);
+
+  const depth = tree.depth(tree.root);
+
+  expect(depth).toBe(0);
+});
+
+test('should return correct depth for node', () => {
+  const tree = Tree([1, 3, 5, 7, 9]);
+
+  tree.insert(2);
+
+  const depth = tree.depth(TreeNode(2));
+
+  expect(depth).toBe(3);
+});
+
+test('should throw if node does not exist in tree', () => {
+  const tree = Tree([1, 2, 3]);
+
+  expect(() => {
+    tree.depth(TreeNode(99));
+  }).toThrow('Node does not exist.');
 });
