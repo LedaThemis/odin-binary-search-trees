@@ -244,3 +244,29 @@ test('should throw if node does not exist in tree', () => {
     tree.depth(TreeNode(99));
   }).toThrow('Node does not exist.');
 });
+
+test('should return true if tree is balanced', () => {
+  const tree = Tree([1, 2, 3]);
+
+  expect(tree.isBalanced()).toBe(true);
+});
+
+test('should return false if tree is not balanced', () => {
+  const tree = Tree([1, 3, 5]);
+
+  tree.insert(2);
+  tree.insert(0);
+  tree.insert(-1);
+
+  expect(tree.isBalanced()).toBe(false);
+});
+
+test('should return false if child nodes of tree are not balanced', () => {
+  const tree = Tree([1, 3, 5]);
+
+  tree.insert(4);
+  tree.insert(0);
+  tree.insert(-1);
+
+  expect(tree.isBalanced()).toBe(false);
+});

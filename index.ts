@@ -225,6 +225,19 @@ export function Tree(array: number[]) {
     }
   };
 
+  const isTreeBalanced = (node: TreeNodeType<number> | null): boolean => {
+    if (node === null) {
+      return true;
+    } else {
+      const leftHeight = getNodeHeight(node.left);
+      const rightHeight = getNodeHeight(node.right);
+
+      console.log({ rightHeight, leftHeight });
+
+      return Math.abs(rightHeight - leftHeight) <= 1 && isTreeBalanced(node.left) && isTreeBalanced(node.right);
+    }
+  };
+
   return {
     get root() {
       return root;
@@ -262,6 +275,9 @@ export function Tree(array: number[]) {
     },
     depth: (node: TreeNodeType<number>) => {
       return getNodeDepth(root, node);
+    },
+    isBalanced: () => {
+      return isTreeBalanced(root);
     },
   };
 }
